@@ -1,4 +1,5 @@
 #include "Stack.h"
+#include <stdexcept>
 
 Stack::~Stack() {
   while (top != 0) {
@@ -12,7 +13,7 @@ int& Stack::gettop() {
   if (top != 0)
     return top->data;
   else
-    throw 1;
+    throw std::logic_error("Stack is empty\n");
 }
 
 bool Stack::pop() {
@@ -31,6 +32,20 @@ bool Stack::push(int x) {
   node->data = x;
   node->next = top;
   top = node;
+
+  if (List_of_min != 0) {
+    if (List_of_min->data >= x) {
+      node = new CNode;
+      node->data = x;
+      node->next = List_of_min;
+      List_of_min = node;
+    }
+  } else {
+    node = new CNode;
+    node->data = x;
+    node->next = List_of_min;
+    List_of_min = node;
+  }
   return true;
 }
 
@@ -38,15 +53,8 @@ int Stack::min() {
   CNode *buf = top;
 
   if (top != 0) {
-    int Elmin = top->data;
-    buf = buf->next;
-    while (buf != 0) {
-      if (buf->data < Elmin)
-      Elmin = buf->data;
-      buf = buf->next;
-    }
-    return Elmin;
+    return List_of_min->data;
   } else {
-    throw 2;
+    throw std::logic_error("Stack is empty\n");
   }
 }

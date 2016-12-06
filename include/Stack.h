@@ -8,9 +8,11 @@ struct CNode {
 
 class Stack {
   CNode* top;
+  CNode* List_of_min;
  public:
   Stack() {
     top = 0;
+    List_of_min = 0;
   }
   ~Stack();
   int& gettop();   // вернуть элемент на вершине стека
